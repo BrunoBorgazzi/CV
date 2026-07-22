@@ -3,375 +3,478 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bruno Borgazzi - Game Designer CV</title>
+    <title>Bruno Borgazzi - Game Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --text-color: #333333;
-            --light-bg: #f8f9fa;
-            --border-color: #e9ecef;
+            --bg-dark: #0a0a0c;
+            --glass-bg: rgba(20, 20, 25, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-primary: #00d2ff;
+            --accent-secondary: #3a7bd5;
+            --text-main: #f0f0f5;
+            --text-muted: #a0a0b0;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: #eaeff2;
-            padding: 2rem;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(10, 10, 12, 0.4), rgba(10, 10, 12, 0.9)), url('assets/bg.png') center/cover no-repeat fixed;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            padding: 2rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .typing-text {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            min-height: 2rem; /* reserve space */
+        }
+
+        .typing-text::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
             justify-content: center;
         }
 
-        .cv-container {
-            max-width: 900px;
-            background: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 3rem 2rem;
-        }
-
-        .profile-header h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
-        }
-
-        .profile-header h2 {
-            font-size: 1.1rem;
-            font-weight: 400;
-            color: #bdc3c7;
-            margin-bottom: 2rem;
-        }
-
-        .contact-info {
-            margin-bottom: 2.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: #ecf0f1;
-        }
-
-        .contact-item i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-            color: var(--accent-color);
-        }
-
-        .sidebar-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .sidebar-title {
-            font-size: 1.2rem;
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
             font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
         }
 
-        .skill-list, .tool-list {
-            list-style: none;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
         }
 
-        .skill-list li, .tool-list li {
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .skill-list li::before {
-            content: "▹";
-            color: var(--accent-color);
-            margin-right: 8px;
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.6);
+            transform: translateY(-2px);
         }
 
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
         }
 
-        .tag {
-            background: rgba(255,255,255,0.1);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
 
-        .language-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
+        /* Container & Glassmorphism */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
         }
 
-        .language-level {
-            color: var(--accent-color);
-            font-weight: 600;
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
         }
 
-        /* Main Content */
-        .main-content {
-            padding: 3rem;
-            background: white;
-        }
-
-        .summary {
-            margin-bottom: 2.5rem;
-            font-size: 1rem;
-            color: #555;
-            text-align: justify;
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 210, 255, 0.2);
         }
 
         .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
+            gap: 1rem;
         }
 
-        .section-title::after {
-            content: "";
-            flex: 1;
-            height: 2px;
-            background: var(--border-color);
-            margin-left: 15px;
+        .section-title i {
+            color: var(--accent-primary);
         }
 
-        .experience-item, .education-item {
-            margin-bottom: 2rem;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 0.5rem;
-        }
-
-        .job-title, .degree-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .company, .institution {
-            font-size: 1rem;
-            color: var(--accent-color);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-        
-        .date {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            font-weight: 500;
-        }
-
-        .responsibilities {
-            padding-left: 20px;
-            color: #555;
-        }
-
-        .responsibilities li {
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
         }
         
         .gamer-profile {
-            background: var(--light-bg);
-            padding: 15px;
-            border-radius: 6px;
-            border-left: 4px solid var(--accent-color);
-            margin-top: 20px;
+            border-left: 3px solid var(--accent-primary);
+            padding-left: 1.5rem;
+            margin-top: 1.5rem;
+            background: rgba(0, 210, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 210, 255, 0.1);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-primary), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0; /* For scroll animation */
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        .timeline-date {
+            font-family: 'Outfit', sans-serif;
+            color: var(--accent-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .timeline-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-company {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
             font-size: 0.95rem;
-            color: #555;
+        }
+
+        .timeline-responsibilities {
+            list-style-type: none;
+        }
+
+        .timeline-responsibilities li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .timeline-responsibilities li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: #050506;
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
-            .cv-container {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                padding: 2rem;
-            }
-            .main-content {
-                padding: 2rem;
-            }
-            .item-header {
-                flex-direction: column;
-            }
+            .hero h1 { font-size: 3rem; }
+            .hero-buttons { flex-direction: column; }
+            .container { padding: 2rem 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="cv-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="profile-header">
-                <h1>Bruno Borgazzi</h1>
-                <h2>Game Designer</h2>
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Bruno Borgazzi</h1>
+            <div class="typing-text" id="typing-text"></div>
+            <div class="hero-buttons">
+                <a href="#experience" class="btn btn-primary">View Experience</a>
+                <a href="#contact" class="btn btn-secondary">Contact Me</a>
             </div>
+        </div>
+    </header>
 
-            <div class="contact-info">
-                <div class="contact-item">
-                    <span>+54 9 341 310-9085</span>
-                </div>
-                <div class="contact-item">
-                    <span>brunoborgazzi@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                    <span>linkedin.com/in/brunoborgazzi</span>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Core Skills</h3>
-                <ul class="skill-list">
-                    <li>Gameplay Systems Design</li>
-                    <li>Game Balancing & Math</li>
-                    <li>Combat & Ability Design</li>
-                    <li>Iterative Prototyping</li>
-                    <li>Cross-functional Collaboration</li>
-                    <li>Technical Documentation</li>
-                </ul>
-            </div>
-
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Tools & Engines</h3>
-                <div class="tags">
-                    <span class="tag">Unreal Engine</span>
-                    <span class="tag">LUA</span>
-                    <span class="tag">AngelScript</span>
-                    <span class="tag">Miro</span>
-                    <span class="tag">Confluence</span>
-                    <span class="tag">Trello</span>
-                    <span class="tag">Jira</span>
-                    <span class="tag">Git</span>
-                    <span class="tag">C++</span>
-                    <span class="tag">C#</span>
+    <div class="container">
+        
+        <section id="about" class="glass-card">
+            <h2 class="section-title"><i class="fa-solid fa-user-astronaut"></i> Profile</h2>
+            <div class="about-grid">
+                <p>
+                    Mid-level Game Designer with a Bachelor's Degree in Video Game Development and a deep passion for ARPGs and RPGs. Experienced in collaborating with multidisciplinary teams to realize game visions. Proven ability to design engaging gameplay systems, including combat, abilities, enemies, and progression, utilizing strong mathematical foundations for game balancing. Highly proficient in Unreal Engine, scripting languages, and modern documentation tools, with a strong commitment to iterative development.
+                </p>
+                <div class="gamer-profile">
+                    <h3><i class="fa-solid fa-gamepad"></i> Gamer Profile</h3>
+                    <p style="margin-top: 0.5rem;">Passionate about ARPGs and RPGs in general. Experienced player in these genres, which directly informs and enhances my understanding of game balancing, player progression, and engaging combat design.</p>
                 </div>
             </div>
+        </section>
 
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Languages</h3>
-                <div class="language-item">
-                    <span>Spanish</span>
-                    <span class="language-level">Native</span>
-                </div>
-                <div class="language-item">
-                    <span>English</span>
-                    <span class="language-level">C1</span>
-                </div>
-                <div class="language-item">
-                    <span>German</span>
-                    <span class="language-level">B1</span>
-                </div>
+        <section id="skills" class="glass-card">
+            <h2 class="section-title"><i class="fa-solid fa-code"></i> Arsenal & Skills</h2>
+            <div class="skills-container">
+                <div class="skill-tag"><i class="fa-solid fa-gear"></i> Gameplay Systems Design</div>
+                <div class="skill-tag"><i class="fa-solid fa-calculator"></i> Game Balancing & Math</div>
+                <div class="skill-tag"><i class="fa-solid fa-khanda"></i> Combat & Ability Design</div>
+                <div class="skill-tag"><i class="fa-brands fa-unreal"></i> Unreal Engine</div>
+                <div class="skill-tag"><i class="fa-solid fa-terminal"></i> LUA</div>
+                <div class="skill-tag"><i class="fa-solid fa-terminal"></i> AngelScript</div>
+                <div class="skill-tag"><i class="fa-brands fa-python"></i> Python</div>
+                <div class="skill-tag"><i class="fa-brands fa-js"></i> JavaScript</div>
+                <div class="skill-tag"><i class="fa-solid fa-c"></i> C++ / C#</div>
+                <div class="skill-tag"><i class="fa-solid fa-diagram-project"></i> Miro & Confluence</div>
+                <div class="skill-tag"><i class="fa-brands fa-trello"></i> Trello & Jira</div>
+                <div class="skill-tag"><i class="fa-brands fa-git-alt"></i> Git</div>
+                <div class="skill-tag"><i class="fa-solid fa-language"></i> English (C1)</div>
+                <div class="skill-tag"><i class="fa-solid fa-language"></i> German (B1)</div>
             </div>
-        </aside>
+        </section>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <p class="summary">
-                Mid-level Game Designer with a Bachelor's Degree in Video Game Development and a deep passion for ARPGs and RPGs. Experienced in collaborating with multidisciplinary teams to realize game visions. Proven ability to design engaging gameplay systems, including combat, abilities, enemies, and progression, utilizing strong mathematical foundations for game balancing. Highly proficient in Unreal Engine, scripting languages, and modern documentation tools, with a strong commitment to iterative development and effective communication.
-            </p>
-
-            <h3 class="section-title">Work Experience</h3>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <h4 class="job-title">Game Designer</h4>
-                    <span class="date">2023 - Present</span>
+        <section id="experience">
+            <h2 class="section-title" style="margin-left: 2rem;"><i class="fa-solid fa-rocket"></i> Journey</h2>
+            <div class="timeline">
+                
+                <div class="timeline-item glass-card">
+                    <span class="timeline-date">2023 - Present</span>
+                    <h3 class="timeline-title">Game Designer</h3>
+                    <p class="timeline-company">Freelance & Independent Projects | Argentina</p>
+                    <ul class="timeline-responsibilities">
+                        <li>Designed and implemented engaging gameplay systems for players, focusing on combat mechanics, abilities, enemy AI behaviors, and player progression.</li>
+                        <li>Implemented game content and logic utilizing <strong>Unreal Engine</strong> and scripting languages (<strong>LUA, AngelScript</strong>).</li>
+                        <li>Successfully <strong>shipped at least one title</strong> (including comprehensive mod projects), taking it from conception to release.</li>
+                        <li>Applied a solid understanding of game balancing and related mathematics to ensure fair and engaging gameplay loops.</li>
+                        <li>Documented design work thoroughly using <strong>Miro</strong> and <strong>Confluence</strong>, and meticulously tracked project progress via <strong>Trello</strong>.</li>
+                        <li>Worked in an iterative approach, actively giving and receiving constructive criticism to refine game features.</li>
+                    </ul>
                 </div>
-                <div class="company">Freelance & Independent Projects | Argentina</div>
-                <ul class="responsibilities">
-                    <li>Designed and implemented engaging gameplay systems for players, focusing on combat mechanics, abilities, enemy AI behaviors, and player progression.</li>
-                    <li>Implemented game content and logic utilizing <strong>Unreal Engine</strong> and scripting languages (<strong>LUA, AngelScript</strong>).</li>
-                    <li>Successfully <strong>shipped at least one title</strong> (including comprehensive mod projects), taking it from conception to release.</li>
-                    <li>Applied a solid understanding of game balancing and related mathematics to ensure fair and engaging gameplay loops.</li>
-                    <li>Documented design work thoroughly using <strong>Miro</strong> and <strong>Confluence</strong>, and meticulously tracked project progress via <strong>Trello</strong>.</li>
-                    <li>Worked in an iterative approach, actively giving and receiving constructive criticism to refine game features and enhance player experience.</li>
-                </ul>
-            </div>
 
-            <div class="experience-item">
-                <div class="item-header">
-                    <h4 class="job-title">Team Scrum Specialist</h4>
-                    <span class="date">2023</span>
+                <div class="timeline-item glass-card">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Team Scrum Specialist</h3>
+                    <p class="timeline-company">Crytek | Germany</p>
+                    <ul class="timeline-responsibilities">
+                        <li>Collaborated closely with multidisciplinary teams including Designers, Producers, Artists, Programmers, and Audio to coordinate video game projects and realize the vision of the game.</li>
+                        <li>Ensured efficient delivery of projects through clear communication and robust team coordination.</li>
+                    </ul>
                 </div>
-                <div class="company">Crytek | Germany</div>
-                <ul class="responsibilities">
-                    <li>Collaborated closely with multidisciplinary teams including Designers, Producers, Artists, Programmers, and Audio to coordinate video game projects and realize the vision of the game.</li>
-                    <li>Ensured efficient delivery of projects through clear communication and robust team coordination.</li>
-                </ul>
-            </div>
 
-            <div class="experience-item">
-                <div class="item-header">
-                    <h4 class="job-title">Technical Support</h4>
-                    <span class="date">2023</span>
+                <div class="timeline-item glass-card">
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title">Technical Support</h3>
+                    <p class="timeline-company">DEI Industrial Design | Argentina</p>
+                    <ul class="timeline-responsibilities">
+                        <li>Provided comprehensive technical support and maintenance, ensuring operational efficiency of IT systems.</li>
+                    </ul>
                 </div>
-                <div class="company">DEI Industrial Design | Argentina</div>
-                <ul class="responsibilities">
-                    <li>Provided comprehensive technical support and maintenance, ensuring operational efficiency of IT systems.</li>
-                </ul>
-            </div>
 
-            <h3 class="section-title">Education</h3>
-
-            <div class="education-item">
-                <div class="item-header">
-                    <h4 class="degree-title">Bachelor's Degree in Video Game Development</h4>
-                    <span class="date">2020 - Present</span>
+                <div class="timeline-item glass-card">
+                    <span class="timeline-date">2020 - Present</span>
+                    <h3 class="timeline-title">Bachelor's Degree in Video Game Development</h3>
+                    <p class="timeline-company">U.A.I. (Rosario, Santa Fe, ARG)</p>
+                    <ul class="timeline-responsibilities">
+                        <li>Coursework completed, thesis remaining.</li>
+                    </ul>
                 </div>
-                <div class="institution">U.A.I. (Rosario, Santa Fe, ARG)</div>
-                <p style="font-size: 0.9rem; color: #555;">Coursework completed, thesis remaining.</p>
-            </div>
-            
-            <div class="education-item">
-                <div class="item-header">
-                    <h4 class="degree-title">International Baccalaureate in Mathematics</h4>
-                    <span class="date">2009 - 2013</span>
-                </div>
-                <div class="institution">Goethe Schule (Rosario, Santa Fe, ARG)</div>
-            </div>
 
-            <div class="gamer-profile">
-                <strong>Gamer Profile:</strong> Passionate about ARPGs and RPGs in general. Experienced player in these genres, which directly informs and enhances my understanding of game balancing, player progression, and engaging combat design.
             </div>
+        </section>
 
-        </main>
     </div>
 
+    <footer id="contact">
+        <div class="container" style="padding: 1rem;">
+            <h2>Let's create something amazing.</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">brunoborgazzi@gmail.com | +54 9 341 310-9085</p>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/brunoborgazzi" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:brunoborgazzi@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Typing effect
+        const text = "Game Designer & ARPG Specialist";
+        const element = document.getElementById("typing-text");
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Start typing after a short delay
+        setTimeout(typeWriter, 500);
+
+        // Scroll animation for timeline items
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
