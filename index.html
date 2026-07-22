@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruno Borgazzi - Game Designer CV</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --text-color: #333333;
+            --light-bg: #f8f9fa;
+            --border-color: #e9ecef;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #eaeff2;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cv-container {
+            max-width: 900px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .profile-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .profile-header h2 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #bdc3c7;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #ecf0f1;
+        }
+
+        .contact-item i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .sidebar-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .skill-list, .tool-list {
+            list-style: none;
+        }
+
+        .skill-list li, .tool-list li {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skill-list li::before {
+            content: "▹";
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .language-level {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem;
+            background: white;
+        }
+
+        .summary {
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            color: #555;
+            text-align: justify;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: var(--border-color);
+            margin-left: 15px;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 2rem;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-title, .degree-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .company, .institution {
+            font-size: 1rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .date {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .responsibilities {
+            padding-left: 20px;
+            color: #555;
+        }
+
+        .responsibilities li {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .gamer-profile {
+            background: var(--light-bg);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-color);
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .cv-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                padding: 2rem;
+            }
+            .main-content {
+                padding: 2rem;
+            }
+            .item-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cv-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-header">
+                <h1>Bruno Borgazzi</h1>
+                <h2>Game Designer</h2>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>+54 9 341 310-9085</span>
+                </div>
+                <div class="contact-item">
+                    <span>brunoborgazzi@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <span>linkedin.com/in/brunoborgazzi</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Core Skills</h3>
+                <ul class="skill-list">
+                    <li>Gameplay Systems Design</li>
+                    <li>Game Balancing & Math</li>
+                    <li>Combat & Ability Design</li>
+                    <li>Iterative Prototyping</li>
+                    <li>Cross-functional Collaboration</li>
+                    <li>Technical Documentation</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Tools & Engines</h3>
+                <div class="tags">
+                    <span class="tag">Unreal Engine</span>
+                    <span class="tag">LUA</span>
+                    <span class="tag">AngelScript</span>
+                    <span class="tag">Miro</span>
+                    <span class="tag">Confluence</span>
+                    <span class="tag">Trello</span>
+                    <span class="tag">Jira</span>
+                    <span class="tag">Git</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">C#</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Languages</h3>
+                <div class="language-item">
+                    <span>Spanish</span>
+                    <span class="language-level">Native</span>
+                </div>
+                <div class="language-item">
+                    <span>English</span>
+                    <span class="language-level">C1</span>
+                </div>
+                <div class="language-item">
+                    <span>German</span>
+                    <span class="language-level">B1</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <p class="summary">
+                Mid-level Game Designer with a Bachelor's Degree in Video Game Development and a deep passion for ARPGs and RPGs. Experienced in collaborating with multidisciplinary teams to realize game visions. Proven ability to design engaging gameplay systems, including combat, abilities, enemies, and progression, utilizing strong mathematical foundations for game balancing. Highly proficient in Unreal Engine, scripting languages, and modern documentation tools, with a strong commitment to iterative development and effective communication.
+            </p>
+
+            <h3 class="section-title">Work Experience</h3>
+
+            <div class="experience-item">
+                <div class="item-header">
+                    <h4 class="job-title">Game Designer</h4>
+                    <span class="date">2023 - Present</span>
+                </div>
+                <div class="company">Freelance & Independent Projects | Argentina</div>
+                <ul class="responsibilities">
+                    <li>Designed and implemented engaging gameplay systems for players, focusing on combat mechanics, abilities, enemy AI behaviors, and player progression.</li>
+                    <li>Implemented game content and logic utilizing <strong>Unreal Engine</strong> and scripting languages (<strong>LUA, AngelScript</strong>).</li>
+                    <li>Successfully <strong>shipped at least one title</strong> (including comprehensive mod projects), taking it from conception to release.</li>
+                    <li>Applied a solid understanding of game balancing and related mathematics to ensure fair and engaging gameplay loops.</li>
+                    <li>Documented design work thoroughly using <strong>Miro</strong> and <strong>Confluence</strong>, and meticulously tracked project progress via <strong>Trello</strong>.</li>
+                    <li>Worked in an iterative approach, actively giving and receiving constructive criticism to refine game features and enhance player experience.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="item-header">
+                    <h4 class="job-title">Team Scrum Specialist</h4>
+                    <span class="date">2023</span>
+                </div>
+                <div class="company">Crytek | Germany</div>
+                <ul class="responsibilities">
+                    <li>Collaborated closely with multidisciplinary teams including Designers, Producers, Artists, Programmers, and Audio to coordinate video game projects and realize the vision of the game.</li>
+                    <li>Ensured efficient delivery of projects through clear communication and robust team coordination.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="item-header">
+                    <h4 class="job-title">Technical Support</h4>
+                    <span class="date">2023</span>
+                </div>
+                <div class="company">DEI Industrial Design | Argentina</div>
+                <ul class="responsibilities">
+                    <li>Provided comprehensive technical support and maintenance, ensuring operational efficiency of IT systems.</li>
+                </ul>
+            </div>
+
+            <h3 class="section-title">Education</h3>
+
+            <div class="education-item">
+                <div class="item-header">
+                    <h4 class="degree-title">Bachelor's Degree in Video Game Development</h4>
+                    <span class="date">2020 - Present</span>
+                </div>
+                <div class="institution">U.A.I. (Rosario, Santa Fe, ARG)</div>
+                <p style="font-size: 0.9rem; color: #555;">Coursework completed, thesis remaining.</p>
+            </div>
+            
+            <div class="education-item">
+                <div class="item-header">
+                    <h4 class="degree-title">International Baccalaureate in Mathematics</h4>
+                    <span class="date">2009 - 2013</span>
+                </div>
+                <div class="institution">Goethe Schule (Rosario, Santa Fe, ARG)</div>
+            </div>
+
+            <div class="gamer-profile">
+                <strong>Gamer Profile:</strong> Passionate about ARPGs and RPGs in general. Experienced player in these genres, which directly informs and enhances my understanding of game balancing, player progression, and engaging combat design.
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
