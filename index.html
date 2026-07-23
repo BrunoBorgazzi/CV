@@ -91,7 +91,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .fixed-nav:hover .nav-menu {
+        .nav-menu.show {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
@@ -137,7 +137,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .lang-selector:hover .lang-menu {
+        .lang-menu.show {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
@@ -380,7 +380,7 @@
             content: '';
             position: absolute;
             left: 15px;
-            top: 0;
+            top: 14px;
             bottom: 0;
             width: 2px;
             background: linear-gradient(to bottom, var(--accent-bronze), transparent);
@@ -667,6 +667,24 @@
     </footer>
 
     <script>
+        // --- Menu Toggles ---
+        document.querySelector('.fixed-nav .nav-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelector('.nav-menu').classList.toggle('show');
+            document.querySelector('.lang-menu').classList.remove('show');
+        });
+
+        document.querySelector('.lang-selector .nav-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelector('.lang-menu').classList.toggle('show');
+            document.querySelector('.nav-menu').classList.remove('show');
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelector('.nav-menu').classList.remove('show');
+            document.querySelector('.lang-menu').classList.remove('show');
+        });
+
         // --- Translations Dictionary ---
         const translations = {
             en: {
@@ -799,8 +817,22 @@
         }
 
         // Initialize Language
-        const savedLang = localStorage.getItem('cv_lang') || 'es'; // default Spanish
-        changeLang(savedLang);
+        let initialLang = localStorage.getItem('cv_lang');
+        
+        if (!initialLang) {
+            // Auto-detect based on browser language (e.g. 'es-AR', 'de-DE', 'en-US')
+            const browserLang = (navigator.language || navigator.userLanguage).toLowerCase();
+            
+            if (browserLang.startsWith('es')) {
+                initialLang = 'es';
+            } else if (browserLang.startsWith('de')) {
+                initialLang = 'de';
+            } else {
+                initialLang = 'en'; // Default fallback for everything else
+            }
+        }
+        
+        changeLang(initialLang);
 
         // --- Scroll animation for timeline items ---
         const timelineObserverOptions = {
