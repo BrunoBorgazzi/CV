@@ -386,9 +386,23 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .typing-text { font-size: 1.2rem; min-height: 1.8rem; margin-bottom: 2rem; }
+            
+            .hero-buttons { 
+                flex-direction: column; 
+                width: 100%; 
+                max-width: 300px; 
+                margin: 0 auto 2rem auto; 
+                gap: 1rem;
+            }
+            .btn { 
+                width: 100%; 
+                justify-content: center; 
+            }
+            
             .container { padding: 0 1rem; }
-            .glass-card { padding: 2rem; }
+            .glass-card { padding: 1.5rem; }
         }
     </style>
 </head>
