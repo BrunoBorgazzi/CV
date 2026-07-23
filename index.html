@@ -9,14 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Color Hunt Palette */
             --bg-dark: #222831;
             --bg-medium: #393E46;
             --accent-bronze: #948979;
             --accent-cream: #DFD0B8;
             
-            --glass-bg: rgba(57, 62, 70, 0.65); /* #393E46 with opacity */
-            --glass-border: rgba(223, 208, 184, 0.15); /* cream with opacity */
+            --glass-bg: rgba(57, 62, 70, 0.65);
+            --glass-border: rgba(223, 208, 184, 0.15);
             
             --text-main: #DFD0B8;
             --text-white: #ffffff;
@@ -27,6 +26,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -40,6 +40,125 @@
 
         h1, h2, h3, h4 {
             font-family: 'Outfit', sans-serif;
+            color: var(--text-white);
+        }
+
+        /* Nav & Language Selector */
+        .fixed-nav {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--accent-cream);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn:hover {
+            background: rgba(148, 137, 121, 0.3);
+            transform: scale(1.05);
+            border-color: var(--accent-bronze);
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .fixed-nav:hover .nav-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(223, 208, 184, 0.1);
+            color: var(--text-white);
+            padding-left: 2rem;
+        }
+
+        .lang-selector {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            min-width: 120px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .lang-selector:hover .lang-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-menu button:hover, .lang-menu button.active {
+            background: rgba(223, 208, 184, 0.1);
             color: var(--text-white);
         }
 
@@ -61,6 +180,7 @@
             transform: translateY(30px);
             animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.2s;
+            max-width: 800px;
         }
 
         .hero h1 {
@@ -72,18 +192,24 @@
             text-shadow: 0 0 20px rgba(223, 208, 184, 0.2);
         }
 
-        .typing-text {
-            font-size: 1.6rem;
+        .hero h2 {
+            font-size: 1.8rem;
             color: var(--accent-bronze);
-            font-family: 'Outfit', sans-serif;
             font-weight: 400;
-            margin-bottom: 2.5rem;
-            min-height: 2.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .typing-text::after {
-            content: '|';
-            animation: blink 1s step-end infinite;
+        .intro-text {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            min-height: 4rem; /* Prevent layout shift during typing */
+        }
+
+        .intro-text span {
+            border-right: 2px solid var(--accent-bronze);
+            animation: blink 0.7s step-end infinite;
         }
 
         /* Buttons & Socials */
@@ -126,11 +252,6 @@
             animation: shine 3s infinite;
         }
 
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
-
         .btn-primary:hover {
             background-color: var(--accent-cream);
             transform: translateY(-3px) scale(1.05);
@@ -148,24 +269,6 @@
             background-color: rgba(223, 208, 184, 0.1);
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 10px 20px rgba(223, 208, 184, 0.3);
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .social-icons a {
-            color: var(--accent-bronze);
-            font-size: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: var(--accent-cream);
-            transform: translateY(-5px);
-            filter: drop-shadow(0 0 10px rgba(223, 208, 184, 0.5));
         }
 
         /* Container & Glassmorphism */
@@ -263,7 +366,7 @@
             background: rgba(148, 137, 121, 0.2);
             border-color: var(--accent-bronze);
             color: var(--text-white);
-            transform: scale(1.05) translateY(-2px) !important; /* Override animation transform */
+            transform: scale(1.05) translateY(-2px) !important;
             box-shadow: 0 5px 15px rgba(148, 137, 121, 0.2);
         }
 
@@ -381,13 +484,19 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
         @keyframes blink {
-            50% { opacity: 0; }
+            50% { border-color: transparent; }
         }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            .typing-text { font-size: 1.2rem; min-height: 1.8rem; margin-bottom: 2rem; }
+            .hero h2 { font-size: 1.4rem; }
+            .intro-text { font-size: 1rem; }
             
             .hero-buttons { 
                 flex-direction: column; 
@@ -403,6 +512,10 @@
             
             .container { padding: 0 1rem; }
             .glass-card { padding: 1.5rem; }
+            
+            .fixed-nav { top: 1rem; left: 1rem; }
+            .lang-selector { top: 1rem; right: 1rem; }
+            .nav-btn { width: 40px; height: 40px; font-size: 1rem; }
         }
     </style>
 </head>
@@ -410,17 +523,40 @@
     <!-- Starfield Canvas -->
     <canvas id="starfield" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
 
-    <header class="hero" style="position: relative; z-index: 10;">
+    <!-- Sticky Navigation -->
+    <nav class="fixed-nav">
+        <div class="nav-btn"><i class="fa-solid fa-bars"></i></div>
+        <div class="nav-menu">
+            <a href="#hero" data-i18n="navHome">Home</a>
+            <a href="#profile" data-i18n="navProfile">Profile</a>
+            <a href="#skills" data-i18n="navSkills">Arsenal & Skills</a>
+            <a href="#experience" data-i18n="navJourney">Journey</a>
+        </div>
+    </nav>
+
+    <!-- Language Selector -->
+    <div class="lang-selector">
+        <div class="nav-btn"><i class="fa-solid fa-globe"></i></div>
+        <div class="lang-menu">
+            <button onclick="changeLang('es')" id="btn-es">Español (ES)</button>
+            <button onclick="changeLang('en')" id="btn-en">English (EN)</button>
+            <button onclick="changeLang('de')" id="btn-de">Deutsch (DE)</button>
+        </div>
+    </div>
+
+    <header class="hero" id="hero" style="position: relative; z-index: 10;">
         <div class="hero-content">
-            <h1>Bruno Borgazzi</h1>
-            <div class="typing-text" id="typing-text"></div>
+            <h1 data-i18n="heroName">Bruno Borgazzi</h1>
+            <h2 data-i18n="heroTitle">Game Designer</h2>
+            
+            <p class="intro-text" id="intro-text"></p>
             
             <div class="hero-buttons">
                 <a href="https://github.com/BrunoBorgazzi" target="_blank" class="btn btn-primary">
-                    <i class="fa-brands fa-github"></i> Ver mis proyectos
+                    <i class="fa-brands fa-github"></i> <span data-i18n="btnProjects">View my projects</span>
                 </a>
                 <a href="https://linkedin.com/in/brunoborgazzi" target="_blank" class="btn btn-secondary">
-                    <i class="fa-brands fa-linkedin"></i> Contactame
+                    <i class="fa-brands fa-linkedin"></i> <span data-i18n="btnContact">Contact me</span>
                 </a>
             </div>
         </div>
@@ -428,23 +564,23 @@
 
     <div class="container">
         
-        <section class="glass-card">
-            <h2 class="section-title"><i class="fa-solid fa-user-astronaut"></i> Profile</h2>
-            <p class="about-text">
+        <section class="glass-card" id="profile">
+            <h2 class="section-title"><i class="fa-solid fa-user-astronaut"></i> <span data-i18n="profileTitle">Profile</span></h2>
+            <p class="about-text" data-i18n="profileDesc">
                 Mid-level Game Designer with a Bachelor's Degree in Video Game Development and a deep passion for ARPGs and RPGs. Experienced in collaborating with multidisciplinary teams to realize game visions. Proven ability to design engaging gameplay systems, including combat, abilities, enemies, and progression, utilizing strong mathematical foundations for game balancing. Highly proficient in Unreal Engine, scripting languages, and modern documentation tools, with a strong commitment to iterative development.
             </p>
             <div class="gamer-profile">
-                <h3><i class="fa-solid fa-gamepad"></i> Gamer Profile</h3>
-                <p>Passionate about ARPGs and RPGs in general. Experienced player in these genres, which directly informs and enhances my understanding of game balancing, player progression, and engaging combat design.</p>
+                <h3><i class="fa-solid fa-gamepad"></i> <span data-i18n="gamerProfileTitle">Gamer Profile</span></h3>
+                <p data-i18n="gamerProfileDesc">Passionate about ARPGs and RPGs in general. Experienced player in these genres, which directly informs and enhances my understanding of game balancing, player progression, and engaging combat design.</p>
             </div>
         </section>
 
-        <section class="glass-card">
-            <h2 class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Arsenal & Skills</h2>
+        <section class="glass-card" id="skills">
+            <h2 class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="skillsTitle">Arsenal & Skills</span></h2>
             <div class="skills-container" id="skills-container">
-                <div class="skill-tag"><i class="fa-solid fa-gear"></i> Gameplay Systems</div>
-                <div class="skill-tag"><i class="fa-solid fa-calculator"></i> Game Balancing</div>
-                <div class="skill-tag"><i class="fa-solid fa-khanda"></i> Combat Design</div>
+                <div class="skill-tag"><i class="fa-solid fa-gear"></i> <span data-i18n="skill1">Gameplay Systems</span></div>
+                <div class="skill-tag"><i class="fa-solid fa-calculator"></i> <span data-i18n="skill2">Game Balancing</span></div>
+                <div class="skill-tag"><i class="fa-solid fa-khanda"></i> <span data-i18n="skill3">Combat Design</span></div>
                 <div class="skill-tag"><i class="fa-brands fa-unreal"></i> Unreal Engine</div>
                 <div class="skill-tag"><i class="fa-solid fa-terminal"></i> LUA</div>
                 <div class="skill-tag"><i class="fa-solid fa-terminal"></i> AngelScript</div>
@@ -454,30 +590,30 @@
                 <div class="skill-tag"><i class="fa-solid fa-diagram-project"></i> Miro & Confluence</div>
                 <div class="skill-tag"><i class="fa-brands fa-trello"></i> Trello & Jira</div>
                 <div class="skill-tag"><i class="fa-brands fa-git-alt"></i> Git</div>
-                <div class="skill-tag"><i class="fa-solid fa-language"></i> English (C1)</div>
-                <div class="skill-tag"><i class="fa-solid fa-language"></i> German (B1)</div>
+                <div class="skill-tag"><i class="fa-solid fa-language"></i> <span data-i18n="skill4">English (C1)</span></div>
+                <div class="skill-tag"><i class="fa-solid fa-language"></i> <span data-i18n="skill5">German (B1)</span></div>
             </div>
         </section>
 
         <section id="experience">
-            <h2 class="section-title" style="margin-left: 2rem;"><i class="fa-solid fa-rocket"></i> Journey</h2>
+            <h2 class="section-title" style="margin-left: 2rem;"><i class="fa-solid fa-rocket"></i> <span data-i18n="journeyTitle">Journey</span></h2>
             <div class="timeline">
                 
                 <div class="timeline-item glass-card" style="margin-bottom: 2rem;">
                     <div class="timeline-header">
                         <span class="timeline-date">2020 - Present</span>
                         <div class="timeline-title-group">
-                            <h3>Game Designer</h3>
-                            <div class="timeline-company">Freelance & Independent Projects</div>
+                            <h3 data-i18n="exp1Title">Game Designer</h3>
+                            <div class="timeline-company" data-i18n="exp1Company">Freelance & Independent Projects</div>
                         </div>
                     </div>
                     <ul class="timeline-responsibilities">
-                        <li>Designed and implemented engaging gameplay systems for players, focusing on combat mechanics, abilities, enemy AI behaviors, and player progression.</li>
-                        <li>Implemented game content and logic utilizing <strong>Unreal Engine</strong> and scripting languages (<strong>LUA, AngelScript</strong>).</li>
-                        <li>Successfully <strong>shipped at least one title</strong> (including comprehensive mod projects), taking it from conception to release.</li>
-                        <li>Applied a solid understanding of game balancing and related mathematics to ensure fair and engaging gameplay loops.</li>
-                        <li>Documented design work thoroughly using <strong>Miro</strong> and <strong>Confluence</strong>, and meticulously tracked project progress via <strong>Trello</strong>.</li>
-                        <li>Worked in an iterative approach, actively giving and receiving constructive criticism to refine game features.</li>
+                        <li data-i18n="exp1Desc1">Designed and implemented engaging gameplay systems for players, focusing on combat mechanics, abilities, enemy AI behaviors, and player progression.</li>
+                        <li data-i18n="exp1Desc2">Implemented game content and logic utilizing <strong>Unreal Engine</strong> and scripting languages (<strong>LUA, AngelScript</strong>).</li>
+                        <li data-i18n="exp1Desc3">Successfully <strong>shipped at least one title</strong> (including comprehensive mod projects), taking it from conception to release.</li>
+                        <li data-i18n="exp1Desc4">Applied a solid understanding of game balancing and related mathematics to ensure fair and engaging gameplay loops.</li>
+                        <li data-i18n="exp1Desc5">Documented design work thoroughly using <strong>Miro</strong> and <strong>Confluence</strong>, and meticulously tracked project progress via <strong>Trello</strong>.</li>
+                        <li data-i18n="exp1Desc6">Worked in an iterative approach, actively giving and receiving constructive criticism to refine game features.</li>
                     </ul>
                 </div>
 
@@ -485,13 +621,13 @@
                     <div class="timeline-header">
                         <span class="timeline-date">2023</span>
                         <div class="timeline-title-group">
-                            <h3>Team Scrum Specialist</h3>
+                            <h3 data-i18n="exp2Title">Team Scrum Specialist</h3>
                             <div class="timeline-company">Crytek | Germany</div>
                         </div>
                     </div>
                     <ul class="timeline-responsibilities">
-                        <li>Collaborated closely with multidisciplinary teams including Designers, Producers, Artists, Programmers, and Audio to coordinate video game projects and realize the vision of the game.</li>
-                        <li>Ensured efficient delivery of projects through clear communication and robust team coordination.</li>
+                        <li data-i18n="exp2Desc1">Collaborated closely with multidisciplinary teams including Designers, Producers, Artists, Programmers, and Audio to coordinate video game projects and realize the vision of the game.</li>
+                        <li data-i18n="exp2Desc2">Ensured efficient delivery of projects through clear communication and robust team coordination.</li>
                     </ul>
                 </div>
 
@@ -499,12 +635,12 @@
                     <div class="timeline-header">
                         <span class="timeline-date">2023</span>
                         <div class="timeline-title-group">
-                            <h3>Technical Support</h3>
+                            <h3 data-i18n="exp3Title">Technical Support</h3>
                             <div class="timeline-company">DEI Industrial Design | Argentina</div>
                         </div>
                     </div>
                     <ul class="timeline-responsibilities">
-                        <li>Provided comprehensive technical support and maintenance, ensuring operational efficiency of IT systems.</li>
+                        <li data-i18n="exp3Desc1">Provided comprehensive technical support and maintenance, ensuring operational efficiency of IT systems.</li>
                     </ul>
                 </div>
                 
@@ -512,12 +648,12 @@
                     <div class="timeline-header">
                         <span class="timeline-date">2020 - Present</span>
                         <div class="timeline-title-group">
-                            <h3>Bachelor's Degree in Video Game Development</h3>
+                            <h3 data-i18n="edu1Title">Bachelor's Degree in Video Game Development</h3>
                             <div class="timeline-company">U.A.I. (Rosario, Santa Fe, ARG)</div>
                         </div>
                     </div>
                     <ul class="timeline-responsibilities">
-                        <li>Coursework completed, thesis remaining.</li>
+                        <li data-i18n="edu1Desc1">Coursework completed, thesis remaining.</li>
                     </ul>
                 </div>
 
@@ -531,22 +667,142 @@
     </footer>
 
     <script>
-        // Typing effect
-        const text = "Game Designer & ARPG Specialist";
-        const element = document.getElementById("typing-text");
-        let i = 0;
-
-        function typeWriter() {
-            if (i < text.length) {
-                element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
+        // --- Translations Dictionary ---
+        const translations = {
+            en: {
+                navHome: "Home", navProfile: "Profile", navSkills: "Arsenal & Skills", navJourney: "Journey",
+                heroName: "Bruno Borgazzi", heroTitle: "Game Designer",
+                heroIntroText: "Crafting immersive ARPG experiences with a focus on deep combat systems, engaging enemy AI, and balanced progression. Highly proficient in Unreal Engine and iterative design.",
+                btnProjects: "View my projects", btnContact: "Contact me",
+                profileTitle: "Profile",
+                profileDesc: "Mid-level Game Designer with a Bachelor's Degree in Video Game Development and a deep passion for ARPGs and RPGs. Experienced in collaborating with multidisciplinary teams to realize game visions. Proven ability to design engaging gameplay systems, including combat, abilities, enemies, and progression, utilizing strong mathematical foundations for game balancing. Highly proficient in Unreal Engine, scripting languages, and modern documentation tools, with a strong commitment to iterative development.",
+                gamerProfileTitle: "Gamer Profile",
+                gamerProfileDesc: "Passionate about ARPGs and RPGs in general. Experienced player in these genres, which directly informs and enhances my understanding of game balancing, player progression, and engaging combat design.",
+                skillsTitle: "Arsenal & Skills",
+                skill1: "Gameplay Systems", skill2: "Game Balancing", skill3: "Combat Design", skill4: "English (C1)", skill5: "German (B1)",
+                journeyTitle: "Journey",
+                exp1Title: "Game Designer", exp1Company: "Freelance & Independent Projects",
+                exp1Desc1: "Designed and implemented engaging gameplay systems for players, focusing on combat mechanics, abilities, enemy AI behaviors, and player progression.",
+                exp1Desc2: "Implemented game content and logic utilizing <strong>Unreal Engine</strong> and scripting languages (<strong>LUA, AngelScript</strong>).",
+                exp1Desc3: "Successfully <strong>shipped at least one title</strong> (including comprehensive mod projects), taking it from conception to release.",
+                exp1Desc4: "Applied a solid understanding of game balancing and related mathematics to ensure fair and engaging gameplay loops.",
+                exp1Desc5: "Documented design work thoroughly using <strong>Miro</strong> and <strong>Confluence</strong>, and meticulously tracked project progress via <strong>Trello</strong>.",
+                exp1Desc6: "Worked in an iterative approach, actively giving and receiving constructive criticism to refine game features.",
+                exp2Title: "Team Scrum Specialist",
+                exp2Desc1: "Collaborated closely with multidisciplinary teams including Designers, Producers, Artists, Programmers, and Audio to coordinate video game projects and realize the vision of the game.",
+                exp2Desc2: "Ensured efficient delivery of projects through clear communication and robust team coordination.",
+                exp3Title: "Technical Support",
+                exp3Desc1: "Provided comprehensive technical support and maintenance, ensuring operational efficiency of IT systems.",
+                edu1Title: "Bachelor's Degree in Video Game Development",
+                edu1Desc1: "Coursework completed, thesis remaining."
+            },
+            es: {
+                navHome: "Inicio", navProfile: "Perfil", navSkills: "Arsenal y Habilidades", navJourney: "Trayectoria",
+                heroName: "Bruno Borgazzi", heroTitle: "Game Designer",
+                heroIntroText: "Creando experiencias ARPG inmersivas con enfoque en sistemas de combate profundos, IA de enemigos desafiante y progresión balanceada. Altamente competente en Unreal Engine y diseño iterativo.",
+                btnProjects: "Ver mis proyectos", btnContact: "Contactame",
+                profileTitle: "Perfil",
+                profileDesc: "Game Designer semi-senior con Licenciatura en Desarrollo de Videojuegos y una profunda pasión por los ARPGs y RPGs. Experiencia colaborando con equipos multidisciplinarios para hacer realidad la visión del juego. Capacidad demostrada para diseñar sistemas de gameplay atractivos, incluyendo combate, habilidades, enemigos y progresión, utilizando bases matemáticas sólidas para el balanceo. Altamente competente en Unreal Engine, lenguajes de scripting y herramientas modernas de documentación.",
+                gamerProfileTitle: "Perfil de Jugador",
+                gamerProfileDesc: "Apasionado por los ARPGs y RPGs en general. Jugador experimentado en estos géneros, lo que informa y mejora directamente mi comprensión del balanceo de juegos, progresión del jugador y diseño de combate atractivo.",
+                skillsTitle: "Arsenal y Habilidades",
+                skill1: "Sistemas de Gameplay", skill2: "Balanceo de Juegos", skill3: "Diseño de Combate", skill4: "Inglés (C1)", skill5: "Alemán (B1)",
+                journeyTitle: "Trayectoria",
+                exp1Title: "Game Designer", exp1Company: "Proyectos Independientes y Freelance",
+                exp1Desc1: "Diseñé e implementé sistemas de gameplay atractivos, enfocándome en mecánicas de combate, habilidades, IA de enemigos y progresión del jugador.",
+                exp1Desc2: "Implementé contenido y lógica de juego utilizando <strong>Unreal Engine</strong> y lenguajes de scripting (<strong>LUA, AngelScript</strong>).",
+                exp1Desc3: "Lancé exitosamente <strong>al menos un título</strong> (incluyendo proyectos de mods integrales), desde la concepción hasta la publicación.",
+                exp1Desc4: "Apliqué sólidos conocimientos de balanceo de juegos y matemáticas relacionadas para asegurar bucles de gameplay justos y atractivos.",
+                exp1Desc5: "Documenté el trabajo minuciosamente usando <strong>Miro</strong> y <strong>Confluence</strong>, y rastreé el progreso del proyecto vía <strong>Trello</strong>.",
+                exp1Desc6: "Trabajé con un enfoque iterativo, dando y recibiendo activamente críticas constructivas para refinar el juego.",
+                exp2Title: "Especialista Scrum",
+                exp2Desc1: "Colaboré estrechamente con equipos multidisciplinarios incluyendo Diseñadores, Productores, Artistas y Programadores para coordinar proyectos y hacer realidad la visión del juego.",
+                exp2Desc2: "Aseguré la entrega eficiente de proyectos mediante una comunicación clara y sólida coordinación.",
+                exp3Title: "Soporte Técnico",
+                exp3Desc1: "Brindé soporte técnico integral y mantenimiento, asegurando la eficiencia operativa de los sistemas.",
+                edu1Title: "Licenciatura en Desarrollo de Videojuegos",
+                edu1Desc1: "Cursada completa, tesis pendiente."
+            },
+            de: {
+                navHome: "Startseite", navProfile: "Profil", navSkills: "Arsenal & Fähigkeiten", navJourney: "Werdegang",
+                heroName: "Bruno Borgazzi", heroTitle: "Game Designer",
+                heroIntroText: "Erschaffung immersiver ARPG-Erlebnisse mit Fokus auf tiefgründigen Kampfsystemen, fesselnder Gegner-KI und ausgewogener Progression. Sehr erfahren in der Unreal Engine und im iterativen Design.",
+                btnProjects: "Meine Projekte ansehen", btnContact: "Kontaktiere mich",
+                profileTitle: "Profil",
+                profileDesc: "Mid-Level Game Designer mit einem Bachelor in Videospielentwicklung und einer großen Leidenschaft für ARPGs und RPGs. Erfahren in der Zusammenarbeit mit multidisziplinären Teams. Nachgewiesene Fähigkeit, fesselnde Gameplay-Systeme zu entwerfen, einschließlich Kampf, Fähigkeiten und Progression, unter Verwendung starker mathematischer Grundlagen für das Game Balancing. Sehr versiert in der Unreal Engine, Skriptsprachen und modernen Dokumentationstools.",
+                gamerProfileTitle: "Spielerprofil",
+                gamerProfileDesc: "Leidenschaftlich für ARPGs und RPGs im Allgemeinen. Erfahrener Spieler in diesen Genres, was mein Verständnis für Game Balancing, Spielerfortschritt und fesselndes Kampfdesign direkt beeinflusst.",
+                skillsTitle: "Arsenal & Fähigkeiten",
+                skill1: "Gameplay-Systeme", skill2: "Game Balancing", skill3: "Kampfdesign", skill4: "Englisch (C1)", skill5: "Deutsch (B1)",
+                journeyTitle: "Werdegang",
+                exp1Title: "Game Designer", exp1Company: "Freelance & Unabhängige Projekte",
+                exp1Desc1: "Entwarf und implementierte fesselnde Gameplay-Systeme mit Schwerpunkt auf Kampfmechaniken, Fähigkeiten, KI-Verhalten und Spielerprogression.",
+                exp1Desc2: "Implementierte Spielinhalte und -logik mithilfe der <strong>Unreal Engine</strong> und Skriptsprachen (<strong>LUA, AngelScript</strong>).",
+                exp1Desc3: "Erfolgreiche <strong>Veröffentlichung von mindestens einem Titel</strong> von der Konzeption bis zum Release.",
+                exp1Desc4: "Wandte ein solides Verständnis von Game Balancing und Mathematik an, um faire Gameplay-Loops zu gewährleisten.",
+                exp1Desc5: "Dokumentierte die Designarbeit gründlich mit <strong>Miro</strong> und <strong>Confluence</strong> und verfolgte den Projektfortschritt über <strong>Trello</strong>.",
+                exp1Desc6: "Arbeitete in einem iterativen Ansatz und nutzte konstruktive Kritik, um Spielfunktionen zu verfeinern.",
+                exp2Title: "Team-Scrum-Spezialist",
+                exp2Desc1: "Arbeitete eng mit multidisziplinären Teams zusammen, um Videospielprojekte zu koordinieren und die Vision des Spiels zu verwirklichen.",
+                exp2Desc2: "Sicherstellte die effiziente Lieferung von Projekten durch klare Kommunikation und robuste Teamkoordination.",
+                exp3Title: "Technischer Support",
+                exp3Desc1: "Umfassender technischer Support zur Gewährleistung der Betriebseffizienz von IT-Systemen.",
+                edu1Title: "Bachelor in Videospielentwicklung",
+                edu1Desc1: "Studienleistungen abgeschlossen, Abschlussarbeit ausstehend."
             }
+        };
+
+        // --- Typing Animation System ---
+        let typingTimeout;
+        let isTyping = false;
+        
+        function typeWriter(text, elementId, speed = 40) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = '<span></span>'; // Reset with cursor span
+            let i = 0;
+            isTyping = true;
+            
+            function type() {
+                if (i < text.length) {
+                    const char = text.charAt(i);
+                    // insert before the cursor span
+                    element.innerHTML = element.innerHTML.replace('<span></span>', char + '<span></span>');
+                    i++;
+                    typingTimeout = setTimeout(type, speed);
+                } else {
+                    isTyping = false;
+                }
+            }
+            type();
         }
 
-        setTimeout(typeWriter, 800);
+        // --- Language Change Logic ---
+        function changeLang(lang) {
+            // Save preference
+            localStorage.setItem('cv_lang', lang);
+            
+            // Update active state in menu
+            document.querySelectorAll('.lang-menu button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
 
-        // Scroll animation for timeline items
+            // Apply translations to data-i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Retrigger typing animation for intro text
+            clearTimeout(typingTimeout);
+            typeWriter(translations[lang]['heroIntroText'], 'intro-text');
+        }
+
+        // Initialize Language
+        const savedLang = localStorage.getItem('cv_lang') || 'es'; // default Spanish
+        changeLang(savedLang);
+
+        // --- Scroll animation for timeline items ---
         const timelineObserverOptions = {
             root: null,
             rootMargin: '0px',
@@ -566,7 +822,7 @@
             timelineObserver.observe(item);
         });
         
-        // Staggered animation for skills
+        // --- Staggered animation for skills ---
         const skillsObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -574,7 +830,7 @@
                     tags.forEach((tag, index) => {
                         setTimeout(() => {
                             tag.classList.add('animate');
-                        }, index * 100); // 100ms delay between each tag
+                        }, index * 100);
                     });
                     observer.unobserve(entry.target);
                 }
@@ -599,13 +855,12 @@
 
         function initStars() {
             stars = [];
-            // Generamos estrellas de diferentes tamaños para crear profundidad
             for (let i = 0; i < 150; i++) {
                 stars.push({
                     x: Math.random() * width,
                     y: Math.random() * height,
-                    size: Math.random() * 2, // radio de la estrella
-                    speed: Math.random() * 0.3 + 0.1, // velocidad constante
+                    size: Math.random() * 2,
+                    speed: Math.random() * 0.3 + 0.1,
                     opacity: Math.random() * 0.8 + 0.2
                 });
             }
@@ -616,19 +871,14 @@
         function drawStars() {
             ctx.clearRect(0, 0, width, height);
             
-            // Calculamos el cambio en el scroll para el efecto Parallax
             const currentScrollY = window.scrollY;
             const scrollDelta = currentScrollY - lastScrollY;
             lastScrollY = currentScrollY;
 
             stars.forEach(star => {
-                // Movimiento constante lento hacia arriba
                 star.y -= star.speed;
-                
-                // Efecto Parallax: se mueven más rápido dependiendo de su tamaño (profundidad) y el scroll
                 star.y -= scrollDelta * (star.size * 0.4);
 
-                // Si se salen de la pantalla, las reubicamos al lado opuesto
                 if (star.y < 0) {
                     star.y = height;
                     star.x = Math.random() * width;
@@ -637,7 +887,6 @@
                     star.x = Math.random() * width;
                 }
 
-                // Dibujamos la estrella usando el color Crema de la paleta
                 ctx.fillStyle = `rgba(223, 208, 184, ${star.opacity})`;
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
@@ -648,7 +897,6 @@
         }
 
         window.addEventListener('resize', resize);
-        // Inicializamos
         resize();
         drawStars();
         
