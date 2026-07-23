@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Colors from reference image */
-            --primary-blue: #007BFF;
-            --dark-blue: #0056B3;
-            --light-blue: #E6F0FF;
+            /* Color Hunt Palette */
+            --bg-dark: #222831;
+            --bg-medium: #393E46;
+            --accent-bronze: #948979;
+            --accent-cream: #DFD0B8;
             
-            --accent-orange: #FF8C00;
-            --dark-orange: #CC7000;
-            --light-orange: #FFF5E6;
+            --glass-bg: rgba(57, 62, 70, 0.65); /* #393E46 with opacity */
+            --glass-border: rgba(223, 208, 184, 0.15); /* cream with opacity */
             
-            --success-green: #28A745;
-            --dark-green: #1E7E34;
-            --light-green: #D4EDDA;
-            
-            --clean-white: #FFFFFF;
-            --light-gray: #F8F9FA;
-            --dark-gray: #E9ECEF;
-            
-            --text-main: #333333;
-            --text-light: #666666;
+            --text-main: #DFD0B8;
+            --text-white: #ffffff;
+            --text-muted: #9ba4b5;
         }
 
         * {
@@ -39,7 +31,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--light-gray);
+            background: linear-gradient(to bottom, #050505, var(--bg-dark), var(--bg-dark), #1a1e24);
+            background-attachment: fixed;
             color: var(--text-main);
             overflow-x: hidden;
             line-height: 1.6;
@@ -47,197 +40,307 @@
 
         h1, h2, h3, h4 {
             font-family: 'Outfit', sans-serif;
+            color: var(--text-white);
         }
 
         /* Hero Section */
         .hero {
-            background-color: var(--primary-blue);
-            color: var(--clean-white);
-            padding: 6rem 2rem 8rem 2rem;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+        }
+
+        .hero-content {
             text-align: center;
+            z-index: 2;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4.5rem;
             font-weight: 800;
+            letter-spacing: -1px;
             margin-bottom: 0.5rem;
+            color: var(--accent-cream);
+            text-shadow: 0 0 20px rgba(223, 208, 184, 0.2);
         }
 
-        .hero h2 {
-            font-size: 1.5rem;
+        .typing-text {
+            font-size: 1.6rem;
+            color: var(--accent-bronze);
+            font-family: 'Outfit', sans-serif;
             font-weight: 400;
-            margin-bottom: 2rem;
-            color: var(--light-blue);
+            margin-bottom: 2.5rem;
+            min-height: 2.5rem;
         }
 
+        .typing-text::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+
+        /* Buttons & Socials */
         .hero-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
             margin-bottom: 2rem;
         }
 
         .btn {
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 2.5rem;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             font-family: 'Outfit', sans-serif;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
         .btn-primary {
-            background-color: var(--accent-orange);
-            color: var(--clean-white);
-            box-shadow: 0 4px 6px rgba(255, 140, 0, 0.3);
+            background-color: var(--accent-bronze);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(148, 137, 121, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
         }
 
         .btn-primary:hover {
-            background-color: var(--dark-orange);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255, 140, 0, 0.4);
+            background-color: var(--accent-cream);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(223, 208, 184, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-cream);
+            border: 2px solid var(--accent-cream);
+            box-shadow: 0 0 10px rgba(223, 208, 184, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(223, 208, 184, 0.1);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(223, 208, 184, 0.3);
         }
 
         .social-icons {
             display: flex;
             justify-content: center;
             gap: 1.5rem;
-            margin-top: 1rem;
         }
 
         .social-icons a {
-            color: var(--clean-white);
-            font-size: 1.8rem;
-            transition: color 0.3s ease, transform 0.3s ease;
+            color: var(--accent-bronze);
+            font-size: 2rem;
+            transition: all 0.3s ease;
         }
 
         .social-icons a:hover {
-            color: var(--accent-orange);
-            transform: scale(1.1);
+            color: var(--accent-cream);
+            transform: translateY(-5px);
+            filter: drop-shadow(0 0 10px rgba(223, 208, 184, 0.5));
         }
 
-        /* Container */
+        /* Container & Glassmorphism */
         .container {
             max-width: 1000px;
-            margin: -4rem auto 3rem auto; /* Overlap the hero section slightly */
+            margin: -3rem auto 3rem auto;
             padding: 0 2rem;
             position: relative;
             z-index: 10;
         }
 
-        .card {
-            background: var(--clean-white);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--dark-gray);
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(223, 208, 184, 0.3);
         }
 
         .section-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary-blue);
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--accent-cream);
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            border-bottom: 2px solid var(--light-blue);
-            padding-bottom: 0.5rem;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            color: var(--accent-bronze);
         }
 
         /* About Section */
         .about-text {
-            font-size: 1.05rem;
-            color: var(--text-light);
+            font-size: 1.1rem;
+            color: var(--text-main);
             margin-bottom: 1.5rem;
+            line-height: 1.8;
         }
         
         .gamer-profile {
-            background-color: var(--light-green);
-            border-left: 4px solid var(--success-green);
+            background: rgba(148, 137, 121, 0.1);
+            border-left: 4px solid var(--accent-bronze);
             padding: 1.5rem;
             border-radius: 0 8px 8px 0;
-            color: var(--dark-green);
         }
         
         .gamer-profile h3 {
-            color: var(--dark-green);
+            color: var(--accent-cream);
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 1.3rem;
         }
 
-        /* Skills Section */
+        /* Skills Section (Staggered Animation) */
         .skills-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 1rem;
         }
 
         .skill-tag {
-            background-color: var(--light-blue);
-            color: var(--dark-blue);
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
+            background: rgba(223, 208, 184, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--accent-cream);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
             font-size: 0.95rem;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .skill-tag.animate {
+            animation: slideUpFade 0.5s forwards;
         }
 
         .skill-tag:hover {
-            background-color: var(--primary-blue);
-            color: var(--clean-white);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+            background: rgba(148, 137, 121, 0.2);
+            border-color: var(--accent-bronze);
+            color: var(--text-white);
+            transform: scale(1.05) translateY(-2px) !important; /* Override animation transform */
+            box-shadow: 0 5px 15px rgba(148, 137, 121, 0.2);
         }
 
         /* Experience Timeline */
-        .timeline-item {
-            margin-bottom: 2.5rem;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid var(--dark-gray);
+        .timeline {
+            position: relative;
+            padding-left: 40px;
         }
-        
-        .timeline-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-bronze), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid var(--accent-cream);
+            box-shadow: 0 0 10px rgba(223, 208, 184, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            background: var(--accent-cream);
+            transform: scale(1.2);
         }
 
         .timeline-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
             margin-bottom: 1rem;
         }
 
         .timeline-title-group h3 {
-            font-size: 1.4rem;
-            color: var(--dark-blue);
+            font-size: 1.5rem;
+            color: var(--text-white);
             margin-bottom: 0.2rem;
         }
 
         .timeline-company {
-            color: var(--accent-orange);
-            font-weight: 600;
-            font-size: 1rem;
+            color: var(--accent-bronze);
+            font-weight: 500;
+            font-size: 1.1rem;
         }
 
         .timeline-date {
-            background-color: var(--light-gray);
-            color: var(--text-light);
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            color: var(--accent-cream);
+            font-family: 'Outfit', sans-serif;
             font-weight: 600;
-            border: 1px solid var(--dark-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: rgba(223, 208, 184, 0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
         }
 
         .timeline-responsibilities {
@@ -247,57 +350,72 @@
         .timeline-responsibilities li {
             position: relative;
             padding-left: 1.5rem;
-            margin-bottom: 0.6rem;
-            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            color: var(--text-muted);
         }
 
         .timeline-responsibilities li::before {
-            content: '•';
+            content: '▹';
             position: absolute;
             left: 0;
-            color: var(--primary-blue);
-            font-weight: bold;
-            font-size: 1.2rem;
-            line-height: 1;
+            color: var(--accent-bronze);
+        }
+
+        .timeline-responsibilities strong {
+            color: var(--accent-cream);
+            font-weight: 600;
         }
 
         /* Footer */
         footer {
-            background-color: var(--dark-blue);
-            color: var(--light-blue);
-            padding: 2rem 0;
+            background-color: rgba(34, 40, 49, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 3rem 0;
             text-align: center;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* Animations */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .timeline-header { flex-direction: column; gap: 0.5rem; }
+            .hero h1 { font-size: 3rem; }
+            .container { padding: 0 1rem; }
+            .glass-card { padding: 2rem; }
         }
     </style>
 </head>
-
 <body>
+    <!-- Starfield Canvas -->
+    <canvas id="starfield" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;"></canvas>
 
-    <header class="hero">
-        <h1>Bruno Borgazzi</h1>
-        <h2>Game Designer</h2>
-        
-        <div class="hero-buttons">
-            <a href="mailto:brunoborgazzi@gmail.com" class="btn btn-primary">
-                <i class="fa-solid fa-envelope"></i> Contact Me
-            </a>
-        </div>
-        
-        <div class="social-icons">
-            <a href="https://linkedin.com/in/brunoborgazzi" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="https://github.com/BrunoBorgazzi" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+    <header class="hero" style="position: relative; z-index: 10;">
+        <div class="hero-content">
+            <h1>Bruno Borgazzi</h1>
+            <div class="typing-text" id="typing-text"></div>
+            
+            <div class="hero-buttons">
+                <a href="https://github.com/BrunoBorgazzi" target="_blank" class="btn btn-primary">
+                    <i class="fa-brands fa-github"></i> Ver mis proyectos
+                </a>
+                <a href="https://linkedin.com/in/brunoborgazzi" target="_blank" class="btn btn-secondary">
+                    <i class="fa-brands fa-linkedin"></i> Contactame
+                </a>
+            </div>
         </div>
     </header>
 
     <div class="container">
         
-        <section class="card">
-            <h2 class="section-title"><i class="fa-solid fa-user"></i> Profile</h2>
+        <section class="glass-card">
+            <h2 class="section-title"><i class="fa-solid fa-user-astronaut"></i> Profile</h2>
             <p class="about-text">
                 Mid-level Game Designer with a Bachelor's Degree in Video Game Development and a deep passion for ARPGs and RPGs. Experienced in collaborating with multidisciplinary teams to realize game visions. Proven ability to design engaging gameplay systems, including combat, abilities, enemies, and progression, utilizing strong mathematical foundations for game balancing. Highly proficient in Unreal Engine, scripting languages, and modern documentation tools, with a strong commitment to iterative development.
             </p>
@@ -307,9 +425,9 @@
             </div>
         </section>
 
-        <section class="card">
-            <h2 class="section-title"><i class="fa-solid fa-code"></i> Skills & Tools</h2>
-            <div class="skills-container">
+        <section class="glass-card">
+            <h2 class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Arsenal & Skills</h2>
+            <div class="skills-container" id="skills-container">
                 <div class="skill-tag"><i class="fa-solid fa-gear"></i> Gameplay Systems</div>
                 <div class="skill-tag"><i class="fa-solid fa-calculator"></i> Game Balancing</div>
                 <div class="skill-tag"><i class="fa-solid fa-khanda"></i> Combat Design</div>
@@ -322,79 +440,204 @@
                 <div class="skill-tag"><i class="fa-solid fa-diagram-project"></i> Miro & Confluence</div>
                 <div class="skill-tag"><i class="fa-brands fa-trello"></i> Trello & Jira</div>
                 <div class="skill-tag"><i class="fa-brands fa-git-alt"></i> Git</div>
-                <div class="skill-tag" style="background-color: var(--light-orange); color: var(--dark-orange);"><i class="fa-solid fa-language"></i> English (C1)</div>
-                <div class="skill-tag" style="background-color: var(--light-orange); color: var(--dark-orange);"><i class="fa-solid fa-language"></i> German (B1)</div>
+                <div class="skill-tag"><i class="fa-solid fa-language"></i> English (C1)</div>
+                <div class="skill-tag"><i class="fa-solid fa-language"></i> German (B1)</div>
             </div>
         </section>
 
-        <section class="card">
-            <h2 class="section-title"><i class="fa-solid fa-briefcase"></i> Experience</h2>
-            
-            <div class="timeline-item">
-                <div class="timeline-header">
-                    <div class="timeline-title-group">
-                        <h3>Game Designer</h3>
-                        <div class="timeline-company">Freelance & Independent Projects</div>
+        <section id="experience">
+            <h2 class="section-title" style="margin-left: 2rem;"><i class="fa-solid fa-rocket"></i> Journey</h2>
+            <div class="timeline">
+                
+                <div class="timeline-item glass-card" style="margin-bottom: 2rem;">
+                    <div class="timeline-header">
+                        <span class="timeline-date">2020 - Present</span>
+                        <div class="timeline-title-group">
+                            <h3>Game Designer</h3>
+                            <div class="timeline-company">Freelance & Independent Projects</div>
+                        </div>
                     </div>
-                    <span class="timeline-date">2020 - Present</span>
+                    <ul class="timeline-responsibilities">
+                        <li>Designed and implemented engaging gameplay systems for players, focusing on combat mechanics, abilities, enemy AI behaviors, and player progression.</li>
+                        <li>Implemented game content and logic utilizing <strong>Unreal Engine</strong> and scripting languages (<strong>LUA, AngelScript</strong>).</li>
+                        <li>Successfully <strong>shipped at least one title</strong> (including comprehensive mod projects), taking it from conception to release.</li>
+                        <li>Applied a solid understanding of game balancing and related mathematics to ensure fair and engaging gameplay loops.</li>
+                        <li>Documented design work thoroughly using <strong>Miro</strong> and <strong>Confluence</strong>, and meticulously tracked project progress via <strong>Trello</strong>.</li>
+                        <li>Worked in an iterative approach, actively giving and receiving constructive criticism to refine game features.</li>
+                    </ul>
                 </div>
-                <ul class="timeline-responsibilities">
-                    <li>Designed and implemented engaging gameplay systems for players, focusing on combat mechanics, abilities, enemy AI behaviors, and player progression.</li>
-                    <li>Implemented game content and logic utilizing <strong>Unreal Engine</strong> and scripting languages (<strong>LUA, AngelScript</strong>).</li>
-                    <li>Successfully <strong>shipped at least one title</strong> (including comprehensive mod projects), taking it from conception to release.</li>
-                    <li>Applied a solid understanding of game balancing and related mathematics to ensure fair and engaging gameplay loops.</li>
-                    <li>Documented design work thoroughly using <strong>Miro</strong> and <strong>Confluence</strong>, and meticulously tracked project progress via <strong>Trello</strong>.</li>
-                    <li>Worked in an iterative approach, actively giving and receiving constructive criticism to refine game features.</li>
-                </ul>
-            </div>
 
-            <div class="timeline-item">
-                <div class="timeline-header">
-                    <div class="timeline-title-group">
-                        <h3>Team Scrum Specialist</h3>
-                        <div class="timeline-company">Crytek | Germany</div>
+                <div class="timeline-item glass-card" style="margin-bottom: 2rem;">
+                    <div class="timeline-header">
+                        <span class="timeline-date">2023</span>
+                        <div class="timeline-title-group">
+                            <h3>Team Scrum Specialist</h3>
+                            <div class="timeline-company">Crytek | Germany</div>
+                        </div>
                     </div>
-                    <span class="timeline-date">2023</span>
+                    <ul class="timeline-responsibilities">
+                        <li>Collaborated closely with multidisciplinary teams including Designers, Producers, Artists, Programmers, and Audio to coordinate video game projects and realize the vision of the game.</li>
+                        <li>Ensured efficient delivery of projects through clear communication and robust team coordination.</li>
+                    </ul>
                 </div>
-                <ul class="timeline-responsibilities">
-                    <li>Collaborated closely with multidisciplinary teams including Designers, Producers, Artists, Programmers, and Audio to coordinate video game projects and realize the vision of the game.</li>
-                    <li>Ensured efficient delivery of projects through clear communication and robust team coordination.</li>
-                </ul>
-            </div>
 
-            <div class="timeline-item">
-                <div class="timeline-header">
-                    <div class="timeline-title-group">
-                        <h3>Technical Support</h3>
-                        <div class="timeline-company">DEI Industrial Design | Argentina</div>
+                <div class="timeline-item glass-card" style="margin-bottom: 2rem;">
+                    <div class="timeline-header">
+                        <span class="timeline-date">2023</span>
+                        <div class="timeline-title-group">
+                            <h3>Technical Support</h3>
+                            <div class="timeline-company">DEI Industrial Design | Argentina</div>
+                        </div>
                     </div>
-                    <span class="timeline-date">2023</span>
+                    <ul class="timeline-responsibilities">
+                        <li>Provided comprehensive technical support and maintenance, ensuring operational efficiency of IT systems.</li>
+                    </ul>
                 </div>
-                <ul class="timeline-responsibilities">
-                    <li>Provided comprehensive technical support and maintenance, ensuring operational efficiency of IT systems.</li>
-                </ul>
-            </div>
-        </section>
-        
-        <section class="card">
-            <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education</h2>
-            <div class="timeline-item" style="border: none; padding-bottom: 0; margin-bottom: 0;">
-                <div class="timeline-header">
-                    <div class="timeline-title-group">
-                        <h3>Bachelor's Degree in Video Game Development</h3>
-                        <div class="timeline-company">U.A.I. (Rosario, Santa Fe, ARG)</div>
+                
+                <div class="timeline-item glass-card">
+                    <div class="timeline-header">
+                        <span class="timeline-date">2020 - Present</span>
+                        <div class="timeline-title-group">
+                            <h3>Bachelor's Degree in Video Game Development</h3>
+                            <div class="timeline-company">U.A.I. (Rosario, Santa Fe, ARG)</div>
+                        </div>
                     </div>
-                    <span class="timeline-date">2020 - Present</span>
+                    <ul class="timeline-responsibilities">
+                        <li>Coursework completed, thesis remaining.</li>
+                    </ul>
                 </div>
-                <p style="color: var(--text-light); margin-top: 0.5rem;">Coursework completed, thesis remaining.</p>
+
             </div>
         </section>
 
     </div>
 
     <footer>
-        <p>© 2026 Bruno Borgazzi. Game Designer</p>
+        <p style="color: var(--accent-bronze);">© 2026 Bruno Borgazzi. Game Designer.</p>
     </footer>
 
+    <script>
+        // Typing effect
+        const text = "Game Designer & ARPG Specialist";
+        const element = document.getElementById("typing-text");
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        setTimeout(typeWriter, 800);
+
+        // Scroll animation for timeline items
+        const timelineObserverOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const timelineObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, timelineObserverOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            timelineObserver.observe(item);
+        });
+        
+        // Staggered animation for skills
+        const skillsObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const tags = entry.target.querySelectorAll('.skill-tag');
+                    tags.forEach((tag, index) => {
+                        setTimeout(() => {
+                            tag.classList.add('animate');
+                        }, index * 100); // 100ms delay between each tag
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        skillsObserver.observe(document.getElementById('skills-container'));
+
+        // --- Starfield Animation Logic ---
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            // Generamos estrellas de diferentes tamaños para crear profundidad
+            for (let i = 0; i < 150; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2, // radio de la estrella
+                    speed: Math.random() * 0.3 + 0.1, // velocidad constante
+                    opacity: Math.random() * 0.8 + 0.2
+                });
+            }
+        }
+
+        let lastScrollY = window.scrollY;
+
+        function drawStars() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Calculamos el cambio en el scroll para el efecto Parallax
+            const currentScrollY = window.scrollY;
+            const scrollDelta = currentScrollY - lastScrollY;
+            lastScrollY = currentScrollY;
+
+            stars.forEach(star => {
+                // Movimiento constante lento hacia arriba
+                star.y -= star.speed;
+                
+                // Efecto Parallax: se mueven más rápido dependiendo de su tamaño (profundidad) y el scroll
+                star.y -= scrollDelta * (star.size * 0.4);
+
+                // Si se salen de la pantalla, las reubicamos al lado opuesto
+                if (star.y < 0) {
+                    star.y = height;
+                    star.x = Math.random() * width;
+                } else if (star.y > height) {
+                    star.y = 0;
+                    star.x = Math.random() * width;
+                }
+
+                // Dibujamos la estrella usando el color Crema de la paleta
+                ctx.fillStyle = `rgba(223, 208, 184, ${star.opacity})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', resize);
+        // Inicializamos
+        resize();
+        drawStars();
+        
+    </script>
 </body>
 </html>
